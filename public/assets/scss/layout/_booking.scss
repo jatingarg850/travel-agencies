@@ -9,8 +9,10 @@
         &-input{
             &-group{
                 flex-wrap: wrap;
+                gap: 20px !important;
                 @media #{$lg,$md,$sm,$xs} {
                     justify-content: flex-start!important;
+                    gap: 15px !important;
                 }
             }
         }
@@ -20,13 +22,25 @@
             z-index: 9;
         }
         &-wrap{
-            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.08);
             background: var(--tg-common-white);
-            border: 1px solid #e1e1e1;
-            border-radius: 15px;
-            padding: 20px 40px 25px 40px;
+            border: 1px solid rgba(225, 225, 225, 0.6);
+            border-radius: 20px;
+            padding: 45px 55px;
+            @media #{$xl} {
+                padding: 40px 50px;
+            }
+            @media #{$lg} {
+                padding: 35px 45px;
+            }
+            @media #{$md} {
+                padding: 30px 40px;
+            }
+            @media #{$sm} {
+                padding: 25px 35px;
+            }
             @media #{$xs} {
-                padding: 20px 30px 25px 30px;
+                padding: 22px 28px;
             }
         }
         &-title{
@@ -166,9 +180,12 @@
         }
         &-parent{
             &-inner {
+                flex: 1 1 auto;
+                min-width: 140px;
                 @media #{$xs} {
                     width: 100%;
                     margin-right: 0;
+                    min-width: auto;
                 }
             }
         }

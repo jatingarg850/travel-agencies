@@ -1,0 +1,268 @@
+@use '../utils' as *;
+
+/*=============================
+	Service Tabs
+===============================*/
+
+.tg-service-tabs-wrapper {
+  background: var(--tg-common-white);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(225, 225, 225, 0.5);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.tg-service-tabs {
+  width: 100%;
+  padding: 0;
+
+  &-header {
+    margin-bottom: 0;
+    border-bottom: 2px solid var(--tg-border-1);
+    padding: 0 40px;
+    background: linear-gradient(135deg, rgba(86, 12, 227, 0.02) 0%, rgba(247, 74, 31, 0.02) 100%);
+
+    @media #{$lg} {
+      padding: 0 35px;
+    }
+
+    @media #{$md} {
+      padding: 0 30px;
+    }
+
+    @media #{$sm} {
+      padding: 0 25px;
+    }
+
+    @media #{$xs} {
+      padding: 0 20px;
+    }
+  }
+
+  &-nav {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+
+    @media #{$sm, $xs} {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    &-inner {
+      display: flex;
+      justify-content: flex-start;
+      gap: 0;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      @media #{$sm, $xs} {
+        gap: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  }
+
+  &-content {
+    animation: fadeIn 0.3s ease-in-out;
+    padding: 45px;
+
+    @media #{$lg} {
+      padding: 40px;
+    }
+
+    @media #{$md} {
+      padding: 35px;
+    }
+
+    @media #{$sm} {
+      padding: 28px;
+    }
+
+    @media #{$xs} {
+      padding: 22px;
+    }
+
+    /* Improve form inputs inside tabs */
+    .tg-booking-form-input-group {
+      gap: 22px !important;
+
+      @media #{$md} {
+        gap: 18px !important;
+      }
+
+      @media #{$sm} {
+        gap: 15px !important;
+      }
+    }
+
+    .tg-booking-form-parent-inner {
+      flex: 1 1 auto;
+      min-width: 160px;
+
+      @media #{$sm, $xs} {
+        min-width: auto;
+      }
+    }
+
+    .tg-booking-add-input-field,
+    input[type="text"],
+    input[type="number"],
+    input[type="time"],
+    select {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1.5px solid #e1e1e1;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--tg-grey-1);
+      background: #fafafa;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        border-color: var(--tg-theme-primary);
+        background: #fff;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: var(--tg-theme-primary);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(86, 12, 227, 0.1);
+      }
+    }
+
+    .bk-search-button {
+      padding: 14px 50px !important;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 10px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(247, 74, 31, 0.3);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(247, 74, 31, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+.tg-service-tab-btn {
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: capitalize;
+  color: var(--tg-grey-4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 26px;
+  position: relative;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  @media #{$sm, $xs} {
+    font-size: 13px;
+    padding: 16px 20px;
+    gap: 8px;
+  }
+
+  &-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    color: currentColor;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    @media #{$sm, $xs} {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &-label {
+    display: inline-block;
+    font-weight: 500;
+  }
+
+  &-border {
+    position: absolute;
+    content: '';
+    background: linear-gradient(90deg, var(--tg-theme-primary) 0%, var(--tg-theme-secondary) 100%);
+    width: 0;
+    height: 3px;
+    bottom: -2px;
+    left: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 2px;
+  }
+
+  &:hover {
+    color: var(--tg-theme-primary);
+    transform: translateY(-2px);
+
+    .tg-service-tab-icon {
+      transform: scale(1.1) translateY(-2px);
+    }
+
+    .tg-service-tab-border {
+      width: 100%;
+      left: 0;
+      box-shadow: 0 2px 8px rgba(86, 12, 227, 0.3);
+    }
+  }
+
+  &.active {
+    color: var(--tg-theme-primary);
+    font-weight: 600;
+    background: linear-gradient(135deg, rgba(86, 12, 227, 0.08) 0%, rgba(86, 12, 227, 0.04) 100%);
+
+    .tg-service-tab-icon {
+      transform: scale(1.15);
+    }
+
+    .tg-service-tab-border {
+      width: 100%;
+      left: 0;
+      background: linear-gradient(90deg, var(--tg-theme-primary) 0%, var(--tg-theme-secondary) 100%);
+      box-shadow: 0 2px 12px rgba(86, 12, 227, 0.4);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

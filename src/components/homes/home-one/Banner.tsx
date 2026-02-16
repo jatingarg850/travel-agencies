@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image"
 import BannerFormOne from "@/components/common/banner-form/BannerFormOne"
+import ServiceTabs from "@/components/common/ServiceTabs"
 
 import avatar from "@/assets/img/hero/tu/avatar.png"
 
@@ -27,8 +28,8 @@ const Banner = () => {
                            </span>
                         </span>
                      </div>
-                     <div className="tg-booking-form-item tg-booking-tu-wrapper mt-15">
-                        <BannerFormOne />
+                     <div className="tg-booking-form-item tg-booking-tu-wrapper mt-15 tg-service-tabs-wrapper">
+                        <ServiceTabs />
                      </div>
                   </div>
                </div>
