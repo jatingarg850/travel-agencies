@@ -19,7 +19,7 @@ const HotelsPage = () => {
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
-    dispatch(setHotels(hotelData as any));
+    dispatch(setHotels(hotelData as typeof hotelData));
   }, [dispatch]);
 
   useEffect(() => {

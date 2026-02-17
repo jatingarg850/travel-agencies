@@ -5,7 +5,7 @@ import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 interface HolidaySearchFormProps {
-  onSearch?: (params: any) => void;
+  onSearch?: (params: Record<string, unknown>) => void;
 }
 
 const HolidaySearchForm = ({ onSearch }: HolidaySearchFormProps) => {

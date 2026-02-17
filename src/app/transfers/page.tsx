@@ -21,7 +21,7 @@ const TransfersPage = () => {
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
-    dispatch(setTransfers(transferData as any));
+    dispatch(setTransfers(transferData as typeof transferData));
   }, [dispatch]);
 
   useEffect(() => {

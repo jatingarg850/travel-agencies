@@ -19,7 +19,7 @@ const FlightsPage = () => {
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
-    dispatch(setFlights(flightData as any));
+    dispatch(setFlights(flightData as typeof flightData));
   }, [dispatch]);
 
   useEffect(() => {

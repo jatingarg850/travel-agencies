@@ -21,7 +21,7 @@ const EsimPage = () => {
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
-    dispatch(setEsims(esimData as any));
+    dispatch(setEsims(esimData as typeof esimData));
   }, [dispatch]);
 
   useEffect(() => {

@@ -37,7 +37,7 @@ const services: ServiceTab[] = [
 const ServiceTabs = () => {
   const [activeService, setActiveService] = useState<ServiceType>('flights');
 
-  const handleSearch = (params: any) => {
+  const handleSearch = (params: Record<string, unknown>) => {
     console.log(`Searching ${activeService}:`, params);
     // Handle search based on service type
   };

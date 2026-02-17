@@ -5,7 +5,7 @@ import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 interface FlightSearchFormProps {
-  onSearch?: (params: any) => void;
+  onSearch?: (params: Record<string, unknown>) => void;
 }
 
 const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 interface EsimSearchFormProps {
-  onSearch?: (params: any) => void;
+  onSearch?: (params: Record<string, unknown>) => void;
 }
 
 const EsimSearchForm = ({ onSearch }: EsimSearchFormProps) => {

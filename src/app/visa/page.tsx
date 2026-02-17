@@ -21,7 +21,7 @@ const VisaPage = () => {
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
-    dispatch(setVisas(visaData as any));
+    dispatch(setVisas(visaData as typeof visaData));
   }, [dispatch]);
 
   useEffect(() => {

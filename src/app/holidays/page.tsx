@@ -22,7 +22,7 @@ const HolidaysPage = () => {
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
-    dispatch(setHolidays(holidayData as any));
+    dispatch(setHolidays(holidayData as typeof holidayData));
   }, [dispatch]);
 
   useEffect(() => {

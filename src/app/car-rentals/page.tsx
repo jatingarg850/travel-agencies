@@ -19,7 +19,7 @@ const CarRentalsPage = () => {
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
-    dispatch(setCars(carRentalData as any));
+    dispatch(setCars(carRentalData as typeof carRentalData));
   }, [dispatch]);
 
   useEffect(() => {
