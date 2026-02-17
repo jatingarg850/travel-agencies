@@ -4,20 +4,18 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setVisas } from '@/redux/features/visaSlice';
 import { selectVisas } from '@/redux/features/visaSlice';
+import VisaCard from '@/components/visa/VisaCard';
 import VisaSearchForm from '@/components/common/banner-form/VisaSearchForm';
 import visaData from '@/data/VisaData';
 import HeaderOne from '@/layouts/headers/HeaderOne';
 import FooterOne from '@/layouts/footers/FooterOne';
-import Link from 'next/link';
-import { useDispatch as useDispatchCart } from 'react-redux';
-import { addToCart } from '@/redux/features/cartSlice';
 
 const VisaPage = () => {
   const dispatch = useDispatch();
-  const dispatchCart = useDispatchCart();
   const visas = useSelector(selectVisas);
   const [filteredVisas, setFilteredVisas] = useState(visas);
-  const [priceFilter, setPriceFilter] = useState({ min: 0, max: 500 });
+  const [priceFilter, setPriceFilter] = useState({ min: 0, max: 1000 });
+  const [processingFilter, setProcessingFilter] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState('price');
 
   useEffect(() => {
@@ -27,10 +25,19 @@ const VisaPage = () => {
   useEffect(() => {
     let filtered = visas;
 
+    // Price filter
     filtered = filtered.filter(v => v.price >= priceFilter.min && v.price <= priceFilter.max);
 
+    // Processing time filter
+    if (processingFilter) {
+      filtered = filtered.filter(v => v.processingTime === processingFilter);
+    }
+
+    // Sorting
     if (sortBy === 'price') {
       filtered = [...filtered].sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'rating') {
+      filtered = [...filtered].sort((a, b) => b.rating - a.rating);
     } else if (sortBy === 'processing') {
       filtered = [...filtered].sort((a, b) => {
         const aDays = parseInt(a.processingTime);
@@ -40,7 +47,9 @@ const VisaPage = () => {
     }
 
     setFilteredVisas(filtered);
-  }, [visas, priceFilter, sortBy]);
+  }, [visas, priceFilter, processingFilter, sortBy]);
+
+  const processingTimes = ['3-5 Days', '5-7 Days', '7-10 Days', '10-15 Days'];
 
   return (
     <>
@@ -48,9 +57,12 @@ const VisaPage = () => {
       <main>
         <div className="container py-5">
           <div className="row">
+            {/* Sidebar */}
             <div className="col-lg-3">
               <div className="tg-sidebar">
                 <h5 className="mb-4">Filters</h5>
+
+                {/* Price Filter */}
                 <div className="mb-4">
                   <h6 className="mb-3">Price Range</h6>
                   <div className="d-flex gap-2 mb-2">
@@ -72,14 +84,50 @@ const VisaPage = () => {
                     />
                   </div>
                 </div>
+
+                {/* Processing Time Filter */}
+                <div className="mb-4">
+                  <h6 className="mb-3">Processing Time</h6>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="processing"
+                      id="processing-all"
+                      checked={processingFilter === null}
+                      onChange={() => setProcessingFilter(null)}
+                    />
+                    <label className="form-check-label" htmlFor="processing-all">
+                      All Times
+                    </label>
+                  </div>
+                  {processingTimes.map(time => (
+                    <div key={time} className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="processing"
+                        id={`processing-${time}`}
+                        checked={processingFilter === time}
+                        onChange={() => setProcessingFilter(time)}
+                      />
+                      <label className="form-check-label" htmlFor={`processing-${time}`}>
+                        {time}
+                      </label>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
+            {/* Main Content */}
             <div className="col-lg-9">
+              {/* Search Form */}
               <div className="mb-4 p-4 bg-light rounded">
                 <VisaSearchForm />
               </div>
 
+              {/* Sort Options */}
               <div className="mb-4 d-flex justify-content-between align-items-center">
                 <h5>Found {filteredVisas.length} Visa Options</h5>
                 <select
@@ -89,59 +137,19 @@ const VisaPage = () => {
                   style={{ width: '200px' }}
                 >
                   <option value="price">Sort by Price</option>
+                  <option value="rating">Sort by Rating</option>
                   <option value="processing">Sort by Processing Time</option>
                 </select>
               </div>
 
-              <div className="tg-visas-list row">
+              {/* Visa Cards */}
+              <div className="tg-visas-list">
                 {filteredVisas.length > 0 ? (
                   filteredVisas.map(visa => (
-                    <div key={visa.id} className="col-md-6 mb-4">
-                      <div className="tg-visa-card card h-100">
-                        <img src={visa.image} alt={visa.destinationCountry} className="card-img-top" style={{ height: '150px', objectFit: 'cover' }} />
-                        <div className="card-body">
-                          <h5 className="card-title">{visa.destinationCountry}</h5>
-                          <p className="text-muted mb-2">
-                            <small>{visa.visaType}</small>
-                          </p>
-                          <div className="mb-3">
-                            <small className="d-block mb-1">
-                              <strong>Processing:</strong> {visa.processingTime}
-                            </small>
-                            <small className="d-block mb-1">
-                              <strong>Validity:</strong> {visa.validity}
-                            </small>
-                            <small className="d-block">
-                              <strong>Stay:</strong> {visa.stayDuration}
-                            </small>
-                          </div>
-                          <div className="mb-3">
-                            <h4 className="mb-0 text-primary">${visa.price}</h4>
-                            <small className="text-muted">Application Fee: ${visa.applicationFee}</small>
-                          </div>
-                          <div className="d-flex gap-2">
-                            <Link href={`/visa/${visa.id}`} className="btn btn-sm btn-outline-primary flex-grow-1">
-                              Details
-                            </Link>
-                            <button
-                              onClick={() => dispatchCart(addToCart({
-                                id: visa.id.toString(),
-                                title: `${visa.destinationCountry} - ${visa.visaType}`,
-                                quantity: 1,
-                              }))}
-                              className="btn btn-sm btn-primary flex-grow-1"
-                            >
-                              Apply
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <VisaCard key={visa.id} visa={visa} />
                   ))
                 ) : (
-                  <div className="col-12">
-                    <div className="alert alert-info">No visa options found matching your criteria.</div>
-                  </div>
+                  <div className="alert alert-info">No visa options found matching your criteria.</div>
                 )}
               </div>
             </div>

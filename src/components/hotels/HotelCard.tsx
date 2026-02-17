@@ -2,6 +2,7 @@
 
 import { Hotel } from '@/types/hotel';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/features/cartSlice';
 
@@ -25,7 +26,14 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
       <div className="row g-0">
         {/* Image */}
         <div className="col-md-3">
-          <img src={hotel.image} alt={hotel.name} className="img-fluid h-100 object-fit-cover" />
+          <Image
+            src={hotel.image}
+            alt={hotel.name}
+            width={300}
+            height={300}
+            className="img-fluid h-100 object-fit-cover"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
         </div>
 
         {/* Content */}
